@@ -1,12 +1,11 @@
 function destructName(fullName) {
-  let firstName = fullName.substring(0, fullName.indexOf(' '));
-  let lastName = fullName.substring(fullName.indexOf(' ') + 1);
+  let firstName = fullName.substring(0, fullName.indexOf(" "));
+  let lastName = fullName.substring(fullName.indexOf(" ") + 1);
   return { firstName, lastName };
 }
 
 function createUserObjFromToken(decodedToken) {
   let userObj = {};
-
   userObj._id = decodedToken.uid;
   userObj.email = decodedToken.email;
   userObj.verified = decodedToken.email_verified;

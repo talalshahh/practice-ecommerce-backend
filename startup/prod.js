@@ -3,6 +3,7 @@ const express = require("express");
 const errorMiddleware = require("../middleware/errorMiddleware");
 const public = require("../routes/public");
 const private = require("../routes/private");
+const admin = require("../routes/admin");
 const checkAuth = require("../middleware/mainMiddleware");
 
 module.exports = function (app) {
@@ -11,4 +12,5 @@ module.exports = function (app) {
   app.use(errorMiddleware);
   app.use("/api", public);
   app.use("/api/private", checkAuth, private);
+  app.use("/api", checkAuth, admin);
 };
