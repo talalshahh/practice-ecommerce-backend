@@ -23,8 +23,5 @@ router.get('/login', async (req, res, next) => {
   if (targetUser) {
     return res.status(200).send(targetUser);
   }
-  // else{
-
-  // }
 });
 module.exports = router;
