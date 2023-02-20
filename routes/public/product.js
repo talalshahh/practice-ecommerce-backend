@@ -1,4 +1,5 @@
 const express = require("express");
+const { default: mongoose } = require("mongoose");
 const { Products } = require("../../models/product");
 
 const router = express.Router();
@@ -12,7 +13,7 @@ router.get("/", async (req, res, next) => {
 });
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const productData = await Products.findById(id);
+  const productData = await Products.findById(mongoose.Types.ObjectId(id));
   if (!productData) {
     return res.status(404).send("Product Data not found");
   }
