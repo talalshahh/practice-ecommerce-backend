@@ -1,16 +1,21 @@
 const express = require("express");
 const { mongoose } = require("mongoose");
 const router = express.Router();
-const stripe = require("stripe")(
-  "sk_test_51MgoGPBEmKccR1EIj9YARNWXh3PBt5eNZPUHpjZf0tte4tmT0iyG3rLiPjlbd7Lu7L1VuQiHa4fuMJZEGZxUCb7F00NwuTxP6j"
-);
-router.get("/secret", async (req, res) => {
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 1099,
+const stripe = require("stripe")("secret_key");
+router.post("/", async (req, res) => {
+  const { id, amount } = req.body;
+  const payment = await stripe.paymentIntents.create({
+    amount,
     currency: "usd",
-    payment_method_types: ["card"],
+    description: "Example Payment",
+    payment_method: id,
+    confirm: true,
   });
-  res.status(200).send({ client_secret: paymentIntent.client_secret });
+  console.log(payment);
+  if (!payment) {
+    return res.status(401).send("Payment not successful");
+  }
+  res.status(200).send("Payment successful");
 });
 
 module.exports = router;
